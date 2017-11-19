@@ -4,10 +4,10 @@
 
 struct ImageData
 {
-	int				_imageWidth;		// width
-	int				_imageHeight;		// height
-	int				_imageBPP;			// bits per pixel
-	unsigned char*	_imageData;			// byte[] data
+	int				_width;		// width
+	int				_height;		// height
+	int				_bpp;			// bits per pixel
+	unsigned char*	_data;			// byte[] data
 };
 
 class SharedAPI
@@ -16,34 +16,22 @@ public:
 	SharedAPI();
 	virtual ~SharedAPI();
 
-	int					getImageWidth();
-	int					getImageHeight();
-	int					getImageBPP();
-	unsigned char*		getImageData();
-	char*				getImagePath();
-	void				CleanStringBuffer();
-	void				LoadImage(const char* _path);
+	char*				getImagePath();	
+
+	ImageData*			LoadImage(const char* _path);
+	void				ReleaseMemory();
 
 private:
-	int					m_imgWidth;
-	int					m_imgHeight;
-	int					m_imgBPP;
-	unsigned char*		m_imgData;
 	char*				m_ptrFilepath;
-
-	ImageData*			m_structData;
+	ImageData*			m_imgData;
 };
 
 extern "C"
 {
-	SHARED_API int				Add(int a, int b);
 	SHARED_API SharedAPI*		CreateSharedAPI();
-	SHARED_API int				getImageWidth(SharedAPI* api);
-	SHARED_API int				getImageHeight(SharedAPI* api);
-	SHARED_API int				getImageBPP(SharedAPI* api);
-	SHARED_API unsigned char*	getImageData(SharedAPI* api);
 	SHARED_API char*			getImagePath(SharedAPI* api);
-	SHARED_API void				LoadImage(SharedAPI* api, const char* _path);
+	SHARED_API ImageData*		LoadImage(SharedAPI* api, const char* _path);
+	SHARED_API void				ReleaseMemory(SharedAPI* api);
 }
 
 
