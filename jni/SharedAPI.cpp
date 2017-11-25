@@ -69,7 +69,12 @@ ImageData* SharedAPI::LoadImage(const char* _path)
 	m_ptrFilepath = (char*)malloc(strlen(_path) + 1);
 	strcpy(m_ptrFilepath, _path);
 
+#if defined _WIN32
 	DEBUG_CONSOLE_LOG(m_ptrFilepath);
+#else
+	printf("==================== FROM NATIVE ====================");
+	printf("%s", m_ptrFilepath);
+#endif
 	
 
 	// load image data
@@ -78,7 +83,13 @@ ImageData* SharedAPI::LoadImage(const char* _path)
 
 	if (m_imgData->_data == NULL)
 	{
+
+#if defined _WIN32
 		DEBUG_CONSOLE_LOG(stbi_failure_reason());
+#else
+		printf("==================== FROM NATIVE ====================");
+		printf("%s", stbi_failure_reason());
+#endif
 
 		m_imgData->_width = -1;
 		m_imgData->_height = -1;
